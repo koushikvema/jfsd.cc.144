@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Controls</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            cursor: pointer;
+        }
+        #timer-section {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 1em;
+            padding: 15px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        #startBtn {
+            background-color: green;
+        }
+        #startBtn:hover {
+            background-color: darkgreen;
+        }
+        #stopBtn {
+            background-color: red;
+        }
+        #stopBtn:hover {
+            background-color: darkred;
+        }
+        #restartBtn {
+            background-color: blue;
+        }
+        #restartBtn:hover {
+            background-color: darkblue;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="counter">Click Here</h1>
+
+    <div id="timer-section">
+        <h2>Timer: <span id="timer">0</span> seconds</h2>
+        <button id="startBtn">Start</button>
+        <button id="stopBtn">Stop</button>
+        <button id="restartBtn">Restart</button>
+    </div>
+
+    <script>
+        const h1 = document.getElementById('counter');
+        const timerDisplay = document.getElementById('timer');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const restartBtn = document.getElementById('restartBtn');
+
+        let count = 0;
+        let interval = null;
+        let startTime = 0;
+        let running = false;
+
+        function updateDisplay() {
+            h1.innerText = hello World${count};
+            count++;
+        }
+
+        function updateTimer() {
+            if (running) {
+                const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+                timerDisplay.textContent = elapsedTime;
+            }
+        }
+
+        function startTimer() {
+            if (running) {
+                alert("Already Running");
+                return;
+            }
+            alert('Started');
+            running = true;
+            startTime = Date.now();
+            interval = setInterval(() => {
+                updateDisplay();
+                updateTimer();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (!running) return;
+            clearInterval(interval);
+            interval = null;
+            running = false;
+            alert('Stopped');
+        }
+
+        function restartTimer() {
+            stopTimer();
+            count = 0;
+            timerDisplay.textContent = "0";
+            h1.innerText = "Click Here";
+            startTimer();
+        }
+
+        // Event Listeners
+        h1.addEventListener('click', startTimer);
+        startBtn.addEventListener('click', startTimer);
+        stopBtn.addEventListener('click', stopTimer);
+        restartBtn.addEventListener('click', restartTimer);
+
+        addEventListener('keypress', (event) => {
+            if (event.key === "Enter") {
+                stopTimer();
+            }
+        });
+
+    </script>
+
+</body>
+</html>
